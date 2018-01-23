@@ -5,7 +5,7 @@ import { fetchBatches } from '../actions/batches/fetch'
 import BatchItem, { batchShape } from '../components/UI/BatchItem'
 
 import Paper from 'material-ui/Paper'
-import Menu from 'material-ui/Menu'
+import './Home.css'
 
 
 class Home extends PureComponent {
@@ -23,12 +23,12 @@ class Home extends PureComponent {
 
   render() {
     return (
-      <div className="Lobby">
+      <div>
         <h1>All batches!</h1>
-        <Paper className="paper">
-          <Menu>
+        <Paper>
+          <div className="Lobby">
             { this.props.batches.map(this.renderBatch) }
-          </Menu>
+          </div>
         </Paper>
       </div>
     )
