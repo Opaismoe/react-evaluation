@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatches } from '../actions/batches/fetch'
 import BatchItem, { batchShape } from '../components/UI/BatchItem'
@@ -8,6 +9,9 @@ import Menu from 'material-ui/Menu'
 
 
 class Home extends PureComponent {
+  static propTypes = {
+    batches: PropTypes.arrayOf(batchShape).isRequired,
+  }
 
   componentWillMount() {
     this.props.fetchBatches()
@@ -20,7 +24,7 @@ class Home extends PureComponent {
   render() {
     return (
       <div className="Lobby">
-        <h1>Lobby!</h1>
+        <h1>All batches!</h1>
         <Paper className="paper">
           <Menu>
             { this.props.batches.map(this.renderBatch) }
@@ -32,6 +36,5 @@ class Home extends PureComponent {
 }
 
 const mapStateToProps = ({ batches }) => ({ batches })
-const mapDispatchToProps = { fetch: fetchBatches }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, {fetchBatches})(Home)

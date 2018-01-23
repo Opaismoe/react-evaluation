@@ -10,7 +10,7 @@ import {
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
     case FETCHED_BATCHES :
-      return [ ...payload ]
+      return [ ...payload ].concat(state)
 
     case FETCHED_ONE_BATCH :
       const batchIds = state.map(g => g._id)
