@@ -7,7 +7,7 @@ import { fetchOneBatch } from '../actions/batches/fetch'
 import StudentCard from '../components/UI/StudentCard'
 import Title from '../components/UI/Title'
 
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
 export class ClassOverview extends PureComponent {
@@ -30,13 +30,17 @@ export class ClassOverview extends PureComponent {
 
     return (
       <div className="ClassWrap">
+        <header style={{marginTop:"40px"}}>
+          <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
+          <Link to={`/batches`}>
+            <RaisedButton label="Back" default={true}/>
+          </Link>
+          <h1 style={{textAlign:"center"}}>Batch nr</h1>
+        </header>
         <div className="CardWrap">
           { this.props.students.map(this.renderStudent) }
         </div>
         <footer>
-          <Link to={`/batches`}>
-            <RaisedButton label="Back" secondary={true}/>
-          </Link>
         </footer>
       </div>
     )

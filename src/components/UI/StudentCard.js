@@ -3,8 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Paper from 'material-ui/Paper'
+import RaisedButton from 'material-ui/RaisedButton';
 import createBatchButton from '../games/CreateBatchButton'
 import './StudentCard.css'
+
+const style = {
+  float:"right",
+  margin:"3px",
+}
 
 export const studentShape = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -37,6 +43,8 @@ class StudentCard extends PureComponent {
           <p>Previous colors: { colors }</p>
           <p>Main color: { mainColor }</p>
           <p>Remarks { remark }</p>
+          <RaisedButton style={style} label="Remove" primary={true}/>
+          <RaisedButton style={style} label="Edit" secondary={true}/>
         </div>
       </Paper>
     </div>
