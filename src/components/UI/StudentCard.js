@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,6 +10,11 @@ import './StudentCard.css'
 
 const style = {
   float:"right",
+  margin:"3px",
+}
+
+const style2 = {
+  float:"left",
   margin:"3px",
 }
 
@@ -35,7 +41,9 @@ class StudentCard extends PureComponent {
           <header>
             <img src= {photo} alt="Person"/>
             <h1>
-              { name }
+              <Link to={`/batches/${_id}/students/${_id}`}>
+                { name }
+              </Link>
             </h1>
           </header>
         <div>
@@ -44,7 +52,7 @@ class StudentCard extends PureComponent {
           <p>Main color: { mainColor }</p>
           <p>Remarks { remark }</p>
           <RaisedButton style={style} label="Remove" primary={true}/>
-          <RaisedButton style={style} label="Edit" secondary={true}/>
+          <RaisedButton style={style2} label="Edit" secondary={true}/>
         </div>
       </Paper>
     </div>

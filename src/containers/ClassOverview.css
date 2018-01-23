@@ -8,3 +8,16 @@
   max-width: 80%;
   margin: auto;
 }
+
+.ClassProgressBar {
+  width: 80%;
+  margin: auto;
+  border: 1px solid rgb(42, 42, 42);
+  box-shadow: 2px 2px rgba(73, 74, 74, 0.55);
+}
+
+
+.btnProgressMain {
+  width: 33.333%;
+  margin: auto;
+}

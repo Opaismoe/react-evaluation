@@ -10,6 +10,12 @@ import Title from '../components/UI/Title'
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
+
+const btnStyle = {
+  minWidth: "100px",
+  labelColor: "#ffffff",
+}
+
 export class ClassOverview extends PureComponent {
   static propTypes = {
     name: PropTypes.string,
@@ -30,6 +36,7 @@ export class ClassOverview extends PureComponent {
 
     return (
       <div className="ClassWrap">
+
         <header style={{marginTop:"40px"}}>
           <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
           <Link to={`/batches`}>
@@ -37,6 +44,28 @@ export class ClassOverview extends PureComponent {
           </Link>
           <h1 style={{textAlign:"center"}}>Batch nr</h1>
         </header>
+
+        <div className="ClassProgressBar">
+          <RaisedButton
+            label="60%"
+            disabledLabelColor={"#0029ff"}
+            className="btnProgressMain"
+            disabledBackgroundColor={"#05ff00"}
+            disabled={true} />
+          <RaisedButton
+            label="25%"
+            disabledLabelColor={"#0029ff"}
+            className="btnProgressMain"
+            disabledBackgroundColor={"#ffe600"}
+            disabled={true} />
+          <RaisedButton
+            label="15%"
+            disabledLabelColor={"#0029ff"}
+            className="btnProgressMain"
+            disabledBackgroundColor={"#ff0000"}
+            disabled={true} />
+        </div>
+
         <div className="CardWrap">
           { this.props.students.map(this.renderStudent) }
         </div>
