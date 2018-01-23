@@ -34,7 +34,7 @@ class Navigation extends PureComponent {
   }
 
   goHome = () => {
-    this.props.push('/batch')
+    this.props.push('/batches')
   }
 
   render() {
