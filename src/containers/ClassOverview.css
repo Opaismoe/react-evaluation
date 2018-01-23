@@ -1,0 +1,10 @@
+.CardWrap {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.ClassWrap {
+  max-width: 80%;
+  margin: auto;
+}

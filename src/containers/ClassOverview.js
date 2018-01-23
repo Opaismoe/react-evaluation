@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
+
+import StudentCard from '../components/UI/StudentCard'
 import Title from '../components/UI/Title'
-import BatchItem from '../components/UI/BatchItem'
+
+import RaisedButton from 'material-ui/RaisedButton';
+import './ClassOverview.css'
 
 export class ClassOverview extends PureComponent {
   static propTypes = {
@@ -14,8 +19,8 @@ export class ClassOverview extends PureComponent {
     this.props.fetchOneBatch(this.props.match.params.batchId)
   }
 
-  renderBatch = (batch, index) => {
-    return <BatchItem key={index} { ...batch } />
+  renderStudent(student, index) {
+    return <StudentCard key={index} {...student} />
   }
 
   render() {
@@ -24,9 +29,15 @@ export class ClassOverview extends PureComponent {
     if (!_id) return
 
     return (
-      <div className="class page">
-        <Title content={name} />
-        <Title content={this.props.students[0].name} />
+      <div className="ClassWrap">
+        <div className="CardWrap">
+          { this.props.students.map(this.renderStudent) }
+        </div>
+        <footer>
+          <Link to={`/batches`}>
+            <RaisedButton label="Back" secondary={true}/>
+          </Link>
+        </footer>
       </div>
     )
   }
