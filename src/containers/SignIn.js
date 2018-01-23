@@ -29,7 +29,7 @@ export class SignIn extends PureComponent {
 
   componentWillMount() {
     const { replace, signedIn } = this.props
-    if (signedIn) replace('/')
+    if (signedIn) push('/batch')
   }
 
   submitForm(event) {

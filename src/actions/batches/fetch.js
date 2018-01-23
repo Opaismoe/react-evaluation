@@ -1,5 +1,3 @@
-// src/actions/batches/fetch.js
-
 import API from '../../api/client'
 import {
   APP_LOADING,
@@ -7,6 +5,7 @@ import {
   LOAD_ERROR,
   LOAD_SUCCESS
 } from '../loading'
+
 import { BATCH_STUDENTS_UPDATED } from './subscribe'
 
 export const FETCHED_BATCHES = 'FETCHED_BATCHES'
@@ -14,7 +13,7 @@ export const FETCHED_ONE_BATCH = 'FETCHED_ONE_BATCH'
 
 const api = new API()
 
-export default () => {
+export const fetchBatches = () => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 

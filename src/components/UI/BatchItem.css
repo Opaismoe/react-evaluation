@@ -1,0 +1,12 @@
+.BatchPaper {
+  padding: 10px;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  min-width: 550px;
+}
+
+.BatchContainer {
+  margin: auto;
+  justify-content: space-between;
+}
