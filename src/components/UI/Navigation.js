@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import signOut from '../../actions/user/sign-out'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
@@ -34,7 +35,7 @@ class Navigation extends PureComponent {
   }
 
   goHome = () => {
-    this.props.push('/batch')
+    this.props.push('/batches')
   }
 
   render() {
