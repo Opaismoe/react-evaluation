@@ -8,12 +8,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import createBatchButton from '../games/CreateBatchButton'
 import './StudentCard.css'
 
-const style = {
+const RemoveStyle = {
   float:"right",
   margin:"3px",
 }
 
-const style2 = {
+const EditStyle = {
   float:"left",
   margin:"3px",
 }
@@ -41,7 +41,7 @@ class StudentCard extends PureComponent {
           <header>
             <img src= {photo} alt="Person"/>
             <h1>
-              <Link to={`/batches/${_id}/students/${_id}`}>
+              <Link to={`/students/${_id}`}>
                 { name }
               </Link>
             </h1>
@@ -51,8 +51,8 @@ class StudentCard extends PureComponent {
           <p>Previous colors: { colors }</p>
           <p>Main color: { mainColor }</p>
           <p>Remarks { remark }</p>
-          <RaisedButton style={style} label="Remove" primary={true}/>
-          <RaisedButton style={style2} label="Edit" secondary={true}/>
+          <RaisedButton style={RemoveStyle} label="Remove" primary={true}/>
+          <RaisedButton style={EditStyle} label="Edit" secondary={true}/>
         </div>
       </Paper>
     </div>
