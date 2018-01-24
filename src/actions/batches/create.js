@@ -11,7 +11,7 @@ import { BATCH_CREATED } from './batch'
 
 const api = new API()
 
-export const createBatch = (name, startsAt, endsAt) => {
+export const createBatch = () => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
@@ -21,7 +21,7 @@ export const createBatch = (name, startsAt, endsAt) => {
         dispatch({ type: LOAD_SUCCESS })
         dispatch({
           type: BATCH_CREATED,
-          payload: result
+          payload: result.body
         })
       })
       .catch((error) => {
