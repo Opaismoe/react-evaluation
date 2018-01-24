@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import Paper from 'material-ui/Paper'
-import createBatchButton from '../games/CreateBatchButton'
+import createBatchButton from '../buttons/CreateBatchButton'
 import './BatchItem.css'
 
 export const batchShape = PropTypes.shape({

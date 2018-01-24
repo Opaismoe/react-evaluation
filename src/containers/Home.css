@@ -2,4 +2,9 @@
   display: flex;
   text-align: center;
   flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.LobbyWrap {
+  
 }
