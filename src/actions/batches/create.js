@@ -11,11 +11,11 @@ import { BATCH_CREATED } from './batch'
 
 const api = new API()
 
-export const createBatch = () => {
+export const createBatch = (batch) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.post('/batches')
+    api.post('/batches', batch)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
