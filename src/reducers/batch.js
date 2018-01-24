@@ -5,7 +5,7 @@ import {
   BATCH_UPDATED,
   BATCH_REMOVED,
   BATCH_STUDENTS_UPDATED,
-} from '../actions/batches/subscribe'
+} from '../actions/batches/batch'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
