@@ -5,7 +5,6 @@ import { fetchBatches } from '../actions/batches/fetch'
 import BatchItem, { batchShape } from '../components/UI/BatchItem'
 import { Link } from 'react-router-dom'
 
-import BatchForm from '../components/forms/BatchForm'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import './Home.css'

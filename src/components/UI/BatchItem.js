@@ -12,6 +12,7 @@ export const batchShape = PropTypes.shape({
     name: PropTypes.string.isRequired,
     startsAt: PropTypes.string.isRequired,
     endsAt: PropTypes.string,
+    batchColors: PropTypes.array,
 })
 
 class BatchItem extends PureComponent {

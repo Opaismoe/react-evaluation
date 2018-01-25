@@ -75,7 +75,7 @@ class BatchForm extends PureComponent {
 
         <div className="actions">
           <RaisedButton onClick={this.submitForm.bind(this)} label="Add" secondary={true}/>
-          <Link to={`/batchForm`}>
+          <Link to={`/batches`}>
             <RaisedButton label="Back" default={true} primary={true}/>
           </Link>
         </div>
