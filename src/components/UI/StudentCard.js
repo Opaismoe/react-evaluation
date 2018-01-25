@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import Paper from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton';
-import createBatchButton from '../games/CreateBatchButton'
+import createBatchButton from '../buttons/CreateBatchButton'
 import './StudentCard.css'
 
 const RemoveStyle = {

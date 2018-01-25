@@ -6,7 +6,7 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-import { BATCH_STUDENTS_UPDATED } from './subscribe'
+import { BATCH_STUDENTS_UPDATED } from './batch'
 
 export const FETCHED_BATCHES = 'FETCHED_BATCHES'
 export const FETCHED_ONE_BATCH = 'FETCHED_ONE_BATCH'
