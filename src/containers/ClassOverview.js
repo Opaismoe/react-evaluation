@@ -37,10 +37,16 @@ export class ClassOverview extends PureComponent {
 
   render() {
     const { _id, name, startsAt, endsAt, batchColors  } = this.props
-
     if (!_id) return
 
+    // clean this up!
+    let startDate = new Date(startsAt)
+    let starts = startDate.toLocaleDateString()
+    let endDate = new Date(endsAt)
+    let ends = endDate.toLocaleDateString()
+
     return (
+
       <div className="ClassWrap">
 
         <header style={{marginTop:"40px"}}>
@@ -50,12 +56,12 @@ export class ClassOverview extends PureComponent {
             <RaisedButton label="Back" default={true}/>
           </Link>
           <h1 style={{textAlign:"center"}}>{name}</h1>
-          <h1 style={{textAlign:"center"}}>{startsAt}</h1>
-          <h1 style={{textAlign:"center"}}>{endsAt}</h1>
-          <h1 style={{textAlign:"center"}}>Batch colors: {batchColors}</h1>
+          <h3 style={{float:"left"}}>Start date: { starts}</h3>
+          <h3 style={{float:"right"}}>End date: { ends }</h3>
           {console.log(red)}
           {console.log(yellow)}
           {console.log(green)}
+          <hr/>
         </header>
 
         <div className="ClassProgressBar">

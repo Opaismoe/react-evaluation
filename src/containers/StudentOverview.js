@@ -29,7 +29,7 @@ export class StudentOverview extends PureComponent {
   }
 
   render() {
-    const { students } = this.props
+    const { name } = this.props
 
 
     return (
@@ -37,7 +37,7 @@ export class StudentOverview extends PureComponent {
 
         <div className="CardWrap">
           <p>Hellloooo!?</p>
-          { students.name }
+          { name }
         </div>
         <footer>
         </footer>
