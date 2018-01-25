@@ -7,7 +7,7 @@ export default (state = [], { type, payload } = {}) => {
       return [ ...payload ].concat(state)
 
     case FETCHED_ONE_STUDENT :
-      const studentIds = state.map(g => g._id)
+      const studentIds = state.map(s => s._id)
       if (studentIds.indexOf(payload._id) < 0) {
         return [{ ...payload }].concat(state)
       }
