@@ -1,11 +1,6 @@
 // src/reducers/batches.js
-import { FETCHED_BATCHES, FETCHED_ONE_BATCH } from '../actions/batches/fetch'
-import {
-  BATCH_CREATED,
-  BATCH_UPDATED,
-  BATCH_REMOVED,
-  BATCH_STUDENTS_UPDATED,
-} from '../actions/batches/batch'
+import { FETCHED_BATCHES, FETCHED_ONE_BATCH, BATCH_CREATED, BATCH_REMOVED } from '../actions/batches/fetch'
+
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
@@ -23,6 +18,7 @@ export default (state = [], { type, payload } = {}) => {
         }
         return batch
       })
+
     case BATCH_CREATED :
       const newBatch = { ...payload }
       return [newBatch].concat(state)
