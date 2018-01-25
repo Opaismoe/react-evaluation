@@ -3,21 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
-import { batchShape } from '../components/UI/BatchItem'
 
 import StudentCard from '../components/UI/StudentCard'
-import Title from '../components/UI/Title'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
 let Result = 0
 const TotResults = []
-
-const btnStyle = {
-  minWidth: "100px",
-  labelColor: "#ffffff",
-}
 
 const red = []
 const yellow = []
@@ -61,6 +54,8 @@ export class ClassOverview extends PureComponent {
           <h1 style={{textAlign:"center"}}>{endsAt}</h1>
           <h1 style={{textAlign:"center"}}>Batch colors: {batchColors}</h1>
           {console.log(red)}
+          {console.log(yellow)}
+          {console.log(green)}
         </header>
 
         <div className="ClassProgressBar">
