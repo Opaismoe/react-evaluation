@@ -35,22 +35,6 @@ class BatchForm extends PureComponent {
     })
   }
 
-  saveBatch() {
-    const {
-      name,
-      startsAt,
-      endsAt,
-    } = this.state
-
-    const newBatch = {
-      name,
-      startsAt,
-      endsAt,
-    }
-    this.props.createBatch(newBatch)
-    console.log(newBatch)
-  }
-
   submitForm(event) {
     event.preventDefault()
     const newBatch = {
@@ -70,23 +54,20 @@ class BatchForm extends PureComponent {
           ref="name"
           className="name"
           placeholder="name"
-          defaultValue={this.state.name}
           onChange={this.updateName.bind(this)}
           onKeyDown={this.updateName.bind(this)} />
         <input
           type="text"
           ref="startsAt"
           className="startsAt"
-          placeholder="Start date"
-          defaultValue={this.state.startsAt}
+          placeholder="dd/mm/yy"
           onChange={this.updateStartDate.bind(this)}
           onKeyDown={this.updateStartDate.bind(this)} />
         <input
           type="text"
           ref="endsAt"
           className="endsAt"
-          placeholder="End date"
-          defaultValue={this.state.endsAt}
+          placeholder="dd/mm/yy"
           onChange={this.updateEndDate.bind(this)}
           onKeyDown={this.updateEndDate.bind(this)} />
 
