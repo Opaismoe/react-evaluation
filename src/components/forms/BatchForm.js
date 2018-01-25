@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { createBatch } from '../../actions/batches/create'
 import RaisedButton from 'material-ui/RaisedButton'
+import { Link } from 'react-router-dom'
 import './BatchForm.css'
 
 class BatchForm extends PureComponent {
@@ -43,7 +44,7 @@ class BatchForm extends PureComponent {
       endsAt: this.refs.endsAt.value,
     }
     this.props.createBatch(newBatch)
-    console.log(newBatch)
+    alert("Added Class!")
   }
 
   render() {
@@ -73,7 +74,10 @@ class BatchForm extends PureComponent {
 
 
         <div className="actions">
-          <RaisedButton onClick={this.submitForm.bind(this)} label="Add Batch" secondary={true}/>
+          <RaisedButton onClick={this.submitForm.bind(this)} label="Add" secondary={true}/>
+          <Link to={`/batchForm`}>
+            <RaisedButton label="Back" default={true} primary={true}/>
+          </Link>
         </div>
       </div>
     )
