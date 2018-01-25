@@ -27,16 +27,15 @@ class Home extends PureComponent {
   render() {
     return (
       <div className="LobbyWrap">
-        <h1>All batches!</h1>
-          <div>
-            <BatchForm style={{margin:"auto"}}/>
-              <Link to={`/batchForm`}>
-                <RaisedButton label="Back" default={true}/>
-              </Link>
-              <div className="Lobby">
-                { this.props.batches.map(this.renderBatch) }
-              </div>
-          </div>
+        <header style={{margin:"auto", width:"200px"}}>
+          <h1>All batches!</h1>
+          <Link to={`/batchForm`}>
+            <RaisedButton label="Create new batch" default={true} secondary={true}/>
+          </Link>
+        </header>
+        <div className="Lobby">
+          { this.props.batches.map(this.renderBatch) }
+        </div>
       </div>
     )
   }
