@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchBatches } from '../actions/batches/fetch'
 import BatchItem, { batchShape } from '../components/UI/BatchItem'
-import RaisedButton from 'material-ui/RaisedButton'
+import { Link } from 'react-router-dom'
+
 import BatchForm from '../components/forms/BatchForm'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import './Home.css'
 
@@ -27,8 +29,10 @@ class Home extends PureComponent {
       <div className="LobbyWrap">
         <h1>All batches!</h1>
           <div>
-            <BatchForm/>
-            <RaisedButton label="Add Batch" secondary={true}/>
+            <BatchForm style={{margin:"auto"}}/>
+              <Link to={`/batchForm`}>
+                <RaisedButton label="Back" default={true}/>
+              </Link>
               <div className="Lobby">
                 { this.props.batches.map(this.renderBatch) }
               </div>

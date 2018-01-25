@@ -26,7 +26,7 @@ export default (state = [], { type, payload } = {}) => {
     case BATCH_CREATED :
       const newBatch = { ...payload }
       return [newBatch].concat(state)
-      
+
     case BATCH_REMOVED :
         return state.filter((batch) => (batch._id !== payload._id))
 

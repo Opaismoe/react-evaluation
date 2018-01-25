@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { createBatch } from '../../actions/batches/create'
-import 'medium-editor/dist/css/medium-editor.css'
-import 'medium-editor/dist/css/themes/default.css'
+import RaisedButton from 'material-ui/RaisedButton'
+import './BatchForm.css'
 
 class BatchForm extends PureComponent {
   constructor(props) {
@@ -64,7 +64,7 @@ class BatchForm extends PureComponent {
 
   render() {
     return (
-      <div className="editor">
+      <div className="FormWrap">
         <input
           type="text"
           ref="name"
@@ -92,7 +92,7 @@ class BatchForm extends PureComponent {
 
 
         <div className="actions">
-          <button className="primary" onClick={this.saveBatch.bind(this)}>Save</button>
+          <RaisedButton onClick={this.submitForm.bind(this)} label="Add Batch" secondary={true}/>
         </div>
       </div>
     )
