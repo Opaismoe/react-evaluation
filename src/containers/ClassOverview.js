@@ -50,17 +50,17 @@ export class ClassOverview extends PureComponent {
       <div className="ClassWrap">
 
         <header style={{marginTop:"40px"}}>
+
           <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
           <RaisedButton style={{ float:"right", margin:"0px 5px"}} label="Ask Question" secondary={true}/>
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
+
           <h1 style={{textAlign:"center"}}>{name}</h1>
           <h3 style={{float:"left"}}>Start date: { starts}</h3>
           <h3 style={{float:"right"}}>End date: { ends }</h3>
-          {console.log(red)}
-          {console.log(yellow)}
-          {console.log(green)}
+
           <hr/>
         </header>
 
@@ -88,8 +88,6 @@ export class ClassOverview extends PureComponent {
         <div className="CardWrap">
           { this.props.students.map(this.renderStudent) }
         </div>
-        <footer>
-        </footer>
       </div>
     )
   }
