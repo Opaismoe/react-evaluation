@@ -5,20 +5,21 @@ import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
 
 import StudentCard from '../components/UI/StudentCard'
-import Title from '../components/UI/Title'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
+let Result = 0
+const TotResults = []
 
-const btnStyle = {
-  minWidth: "100px",
-  labelColor: "#ffffff",
-}
+const red = []
+const yellow = []
+const green = []
 
 export class ClassOverview extends PureComponent {
   static propTypes = {
     name: PropTypes.string,
+    batchColors: PropTypes.array,
   }
 
   componentWillMount() {
@@ -29,20 +30,38 @@ export class ClassOverview extends PureComponent {
     return <StudentCard key={index} {...student} />
   }
 
-  render() {
-    const { _id, name } = this.props
+  TotPercent = (arr, batchColors) => {
+    Result = red.length / batchColors.length * 100
+    return TotResults.push(Math.round(Result))
+  }
 
+  render() {
+    const { _id, name, startsAt, endsAt, batchColors  } = this.props
     if (!_id) return
 
+    // clean this up!
+    let startDate = new Date(startsAt)
+    let starts = startDate.toLocaleDateString()
+    let endDate = new Date(endsAt)
+    let ends = endDate.toLocaleDateString()
+
     return (
+
       <div className="ClassWrap">
 
         <header style={{marginTop:"40px"}}>
+
           <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
+          <RaisedButton style={{ float:"right", margin:"0px 5px"}} label="Ask Question" secondary={true}/>
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
-          <h1 style={{textAlign:"center"}}>Batch nr</h1>
+
+          <h1 style={{textAlign:"center"}}>{name}</h1>
+          <h3 style={{float:"left"}}>Start date: { starts}</h3>
+          <h3 style={{float:"right"}}>End date: { ends }</h3>
+
+          <hr/>
         </header>
 
         <div className="ClassProgressBar">
@@ -69,8 +88,6 @@ export class ClassOverview extends PureComponent {
         <div className="CardWrap">
           { this.props.students.map(this.renderStudent) }
         </div>
-        <footer>
-        </footer>
       </div>
     )
   }

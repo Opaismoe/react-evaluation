@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 
 import BatchForm from '../components/forms/BatchForm'
 
@@ -10,7 +9,7 @@ class AddClass extends PureComponent {
 
   render() {
     return (
-      <div className="LobbyWrap">
+      <div style={{margin:"auto", width:"300px"}} className="LobbyWrap">
         <h1>Add new batch!</h1>
           <div>
             <BatchForm style={{margin:"auto"}}/>

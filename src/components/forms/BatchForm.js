@@ -58,14 +58,14 @@ class BatchForm extends PureComponent {
           onChange={this.updateName.bind(this)}
           onKeyDown={this.updateName.bind(this)} />
         <input
-          type="text"
+          type="date"
           ref="startsAt"
           className="startsAt"
           placeholder="dd/mm/yy"
           onChange={this.updateStartDate.bind(this)}
           onKeyDown={this.updateStartDate.bind(this)} />
         <input
-          type="text"
+          type="date"
           ref="endsAt"
           className="endsAt"
           placeholder="dd/mm/yy"
@@ -75,7 +75,7 @@ class BatchForm extends PureComponent {
 
         <div className="actions">
           <RaisedButton onClick={this.submitForm.bind(this)} label="Add" secondary={true}/>
-          <Link to={`/batchForm`}>
+          <Link to={`/batches`}>
             <RaisedButton label="Back" default={true} primary={true}/>
           </Link>
         </div>

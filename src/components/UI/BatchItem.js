@@ -12,6 +12,7 @@ export const batchShape = PropTypes.shape({
     name: PropTypes.string.isRequired,
     startsAt: PropTypes.string.isRequired,
     endsAt: PropTypes.string,
+    batchColors: PropTypes.array,
 })
 
 class BatchItem extends PureComponent {
@@ -19,8 +20,17 @@ class BatchItem extends PureComponent {
     ...batchShape.isRequired,
   }
 
+renderDate() {
+}
+
   render() {
     const { _id, name, startsAt, endsAt } = this.props
+
+    // clean this up
+    let startDate = new Date(startsAt)
+    let starts = startDate.toLocaleDateString()
+    let endDate = new Date(endsAt)
+    let ends = endDate.toLocaleDateString()
 
     return(
       <div className="BatchContainer">
@@ -36,8 +46,8 @@ class BatchItem extends PureComponent {
           <p>Class: { name }</p>
         </div>
         <footer>
-          <span style={{float:"left"}}>Start date: { startsAt }</span>
-          <span style={{float:"right"}}>End date: { endsAt }</span>
+          <span style={{float:"left"}}>Start date: { starts}</span>
+          <span style={{float:"right"}}>End date: { ends }</span>
         </footer>
       </Paper>
     </div>
