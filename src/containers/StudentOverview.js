@@ -22,6 +22,7 @@ export class StudentOverview extends PureComponent {
     return (
       <div className="StudentWrap">
         <div className="CardWrap">
+          <h2>42</h2>
           <p>Hellloooo!?</p>
           { name }
         </div>
