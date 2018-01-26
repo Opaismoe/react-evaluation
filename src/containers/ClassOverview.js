@@ -35,6 +35,19 @@ export class ClassOverview extends PureComponent {
     return TotResults.push(Math.round(Result))
   }
 
+  sortByColor = (value) => {
+    if (value >= 3) {
+      return green.push(value)
+    }
+    if (value === 2) {
+      return yellow.push(value)
+    }
+    if (value < 2) {
+      return red.push(value)
+    }
+  }
+
+
   render() {
     const { _id, name, startsAt, endsAt, batchColors  } = this.props
     if (!_id) return

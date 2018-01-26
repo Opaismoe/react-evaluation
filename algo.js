@@ -1,5 +1,5 @@
 // Fake Student array
-const Studentarr = [1,1,2,2,3,3,1,1,2,2,2,3]
+const Studentarr = [1,2,3]
 console.log(Studentarr + ` <-- Fake student array\n`)
 
 // Array for each color
