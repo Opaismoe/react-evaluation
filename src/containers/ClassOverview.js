@@ -21,19 +21,23 @@ export class ClassOverview extends PureComponent {
   constructor(props) {
     super(props)
 
-    const { name, startsAt, endsAt, colors } = this.props.batches
+
 
     this.state = {
       name: props.name,
       startsAt: props.startsAt,
       endsAt: props.endsAt,
-      colors: props.colors,
+      color: props.color,
     }
+
+    this.getColors = this.getColors.bind(this)
+    this.sortByColor = this.sortByColor.bind(this)
+    this.getRandomNum = this.getRandomNum.bind(this)
   }
 
   componentWillMount() {
     this.props.fetchOneBatch(this.props.match.params.batchId)
-  }
+    }
 
   renderStudent(student, index) {
     return <StudentCard key={index} student={student} />
@@ -43,19 +47,38 @@ export class ClassOverview extends PureComponent {
     return console.log('hellooo')
   }
 
-  render() {
-  const batches = this.props
-  const color = []
+  sortByColor = (value) => {
+    if (value >= 3) {
+      return console.log("green")
+    }
+    if (value === 2) {
+      return yellow.push(value)
+    }
+    if (value < 2) {
+      return red.push(value)
+    }
+  }
 
-    { this.props.batches.map(batch => {
-      batch.students.map((student, index) => {
-        student.colors.map((colors, index) => {
-          return color.push(colors)
+  getRandomNum = (max) => {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  getColors() {
+    const color = []
+      { this.props.batches.map(batch => {
+        batch.students.map((student, index) => {
+          student.colors.filter((colors, index) => {
+            return this.sortByColor(colors)
+          })
         })
       })
-    })
+    }
   }
-    const { _id, name, startsAt, endsAt, batchColors } = this.state
+
+  render() {
+  const batches = this.props
+
+    const { _id, name, startsAt, endsAt, color } = this.state
 
     // clean this up!
     let startDate = new Date(startsAt)
@@ -74,14 +97,17 @@ export class ClassOverview extends PureComponent {
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
-          <AskQuestion />
+          <button onClick={this.getColors}/>
 
-          <h1 style={{textAlign:"center"}}>name:{this.props.batches.name}</h1>
-          <h3 style={{float:"left"}}>Start date: { starts}</h3>
-          <h3 style={{float:"right"}}>End date: { ends }</h3>
-          <h3> colors { color }</h3>
+          <h1 style={{textAlign:"center"}}>name:{name}</h1>
+          <h3 style={{float:"left"}}>Start date: { startsAt}</h3>
+          <h3 style={{float:"right"}}>End date: { endsAt }</h3>
 
+          <br/>
           <hr/>
+          <h3> colors { color }</h3>
+          <hr/>
+
         </header>
 
         <div className="ClassProgressBar">
