@@ -25,7 +25,6 @@ class AskQuestion extends PureComponent {
   constructor(props) {
   super(props)
     const { colors } = this.props
-    console.log(colors)
 
     this.state = {
       colors,
@@ -42,8 +41,9 @@ class AskQuestion extends PureComponent {
     console.log(state)
   }
 
-  renderQuestion(props) {
+  renderQuestion(colors) {
     this.props.askQuestion()
+    console.log(colors)
     this.setState({
       colors: this.refs.colors.value
     })

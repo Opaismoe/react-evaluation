@@ -21,12 +21,13 @@ export class ClassOverview extends PureComponent {
   constructor(props) {
     super(props)
 
-    const { name, startsAt, endsAt } = this.props.batches
+    const { name, startsAt, endsAt, colors } = this.props.batches
 
     this.state = {
       name: props.name,
       startsAt: props.startsAt,
       endsAt: props.endsAt,
+      colors: props.colors,
     }
   }
 
@@ -43,7 +44,18 @@ export class ClassOverview extends PureComponent {
   }
 
   render() {
-    const { _id, name, startsAt, endsAt, batchColors  } = this.state
+  const batches = this.props
+  const color = []
+
+    { this.props.batches.map(batch => {
+      batch.students.map((student, index) => {
+        student.colors.map((colors, index) => {
+          return color.push(colors)
+        })
+      })
+    })
+  }
+    const { _id, name, startsAt, endsAt, batchColors } = this.state
 
     // clean this up!
     let startDate = new Date(startsAt)
@@ -67,6 +79,7 @@ export class ClassOverview extends PureComponent {
           <h1 style={{textAlign:"center"}}>name:{this.props.batches.name}</h1>
           <h3 style={{float:"left"}}>Start date: { starts}</h3>
           <h3 style={{float:"right"}}>End date: { ends }</h3>
+          <h3> colors { color }</h3>
 
           <hr/>
         </header>
@@ -91,13 +104,12 @@ export class ClassOverview extends PureComponent {
             disabledBackgroundColor={"#ff0000"}
             disabled={true} />
         </div>
-
         <h3 >{ _id }</h3>
         <h3 > HALLO</h3>
           <div className="CardWrap">
             { this.props.batches.map(batch => {
-              return batch.students.map((student, index) => {
-                return this.renderStudent(student, index)
+                return batch.students.map((student, index) => {
+                  return this.renderStudent(student, index)
              })
            })
          }
@@ -109,7 +121,8 @@ export class ClassOverview extends PureComponent {
 
 
 const mapStateToProps = state => ({
-batches: state.batches,
+  colors: state.batches.students,
+  batches: state.batches,
 })
 
 

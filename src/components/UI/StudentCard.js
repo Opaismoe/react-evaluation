@@ -49,7 +49,7 @@ class StudentCard extends PureComponent {
         <div>
           <p></p>
           <p>Previous colors: { colors }</p>
-          
+
           <p>Main color: { mainColor }</p>
           <p>Remarks { remark }</p>
           <RaisedButton style={RemoveStyle} label="Remove" primary={true}/>
