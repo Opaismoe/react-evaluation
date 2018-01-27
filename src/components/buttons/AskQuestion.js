@@ -6,22 +6,30 @@ import { fetchBatches } from '../../actions/batches/fetch'
 import { askQuestion } from '../../actions/batches/askQuestion'
 import StarIcon from 'material-ui/svg-icons/action/favorite'
 import BatchItem, { batchShape } from '../../components/UI/BatchItem'
-import EvaluationCard from '../UI/EvaluationCard'
 
 
-export const evaluationShape = PropTypes.shape({
-    colors: PropTypes.number,
-    remark: PropTypes.string
+export const studentShape = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    colors: PropTypes.array.isRequired,
+    mainColor: PropTypes.number.isRequired,
+    remark: PropTypes.string.isRequired,
 })
-
 
 class AskQuestion extends PureComponent {
   static propTypes = {
-    evaluation: PropTypes.array,
+    ...studentShape.isRequired,
   }
 
   constructor(props) {
   super(props)
+    const { colors } = this.props
+    console.log(colors)
+
+    this.state = {
+      colors,
+    }
 
 
     this.printSomething = this.printSomething.bind(this)
@@ -29,33 +37,31 @@ class AskQuestion extends PureComponent {
 
   }
 
-
-
   printSomething(state) {
     this.props.askQuestion(state)
+    console.log(state)
   }
 
-  renderEvaluation(evaluation, index) {
-    return <EvaluationCard key={index} {...evaluation} />
-  }
-
-  renderQuestion() {
-    const { color } = this.props
-    this.printSomething({color})
+  renderQuestion(props) {
+    this.props.askQuestion()
+    this.setState({
+      colors: this.refs.colors.value
+    })
   }
 
   render() {
-    const { color, remark } = this.props
 
 
     return (
       <div className="AskQuestion">
-        <p>{color}</p>
+        <p>here i am</p>
         <RaisedButton
-          label={remark}
+          label="wtf"
           primary={true}
-          onClick={() => this.renderQuestion({ color })}
-          icon={<StarIcon />} />
+          onClick={(prop) => this.renderQuestion(prop)}
+          icon={<StarIcon />}
+          ref="colors" />
+
       </div>
     )
   }

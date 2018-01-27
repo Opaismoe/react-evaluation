@@ -9,18 +9,18 @@ import {
 const api = new API()
 export const ASK_QUESTION = 'ASK_QUESTION'
 
-export const askQuestion = (batchColors) => {
+export const askQuestion = (colors) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.get('/batches')
+    api.get(`/batches/`)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
         dispatch({
           type: ASK_QUESTION,
-          payload: batchColors
+          payload: {...colors}
         })
       })
       .catch((error) => {

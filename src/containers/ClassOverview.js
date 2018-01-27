@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
 
 import StudentCard from '../components/UI/StudentCard'
+import AskQuestion from '../components/buttons/AskQuestion'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
@@ -17,9 +18,16 @@ const yellow = []
 const green = []
 
 export class ClassOverview extends PureComponent {
-  static propTypes = {
-    name: PropTypes.string,
-    batchColors: PropTypes.array,
+  constructor(props) {
+    super(props)
+
+    const { name, startsAt, endsAt } = this.props.batches
+
+    this.state = {
+      name: props.name,
+      startsAt: props.startsAt,
+      endsAt: props.endsAt,
+    }
   }
 
   componentWillMount() {
@@ -27,30 +35,15 @@ export class ClassOverview extends PureComponent {
   }
 
   renderStudent(student, index) {
-    return <StudentCard key={index} {...student} />
+    return <StudentCard key={index} student={student} />
   }
 
-  TotPercent = (arr, batchColors) => {
-    Result = red.length / batchColors.length * 100
-    return TotResults.push(Math.round(Result))
+  returnColors(student, index) {
+    return console.log('hellooo')
   }
-
-  sortByColor = (value) => {
-    if (value >= 3) {
-      return green.push(value)
-    }
-    if (value === 2) {
-      return yellow.push(value)
-    }
-    if (value < 2) {
-      return red.push(value)
-    }
-  }
-
 
   render() {
-    const { _id, name, startsAt, endsAt, batchColors  } = this.props
-    if (!_id) return
+    const { _id, name, startsAt, endsAt, batchColors  } = this.state
 
     // clean this up!
     let startDate = new Date(startsAt)
@@ -69,8 +62,9 @@ export class ClassOverview extends PureComponent {
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
+          <AskQuestion />
 
-          <h1 style={{textAlign:"center"}}>{name}</h1>
+          <h1 style={{textAlign:"center"}}>name:{this.props.batches.name}</h1>
           <h3 style={{float:"left"}}>Start date: { starts}</h3>
           <h3 style={{float:"right"}}>End date: { ends }</h3>
 
@@ -98,27 +92,25 @@ export class ClassOverview extends PureComponent {
             disabled={true} />
         </div>
 
-        <h3 >{ this.props.batchColors }</h3>
+        <h3 >{ _id }</h3>
         <h3 > HALLO</h3>
-        <div className="CardWrap">
-          { this.props.students.map(this.renderStudent) }
+          <div className="CardWrap">
+            { this.props.batches.map(batch => {
+              return batch.students.map((student, index) => {
+                return this.renderStudent(student, index)
+             })
+           })
+         }
+          </div>
         </div>
-      </div>
-    )
-  }
-}
-
-const mapStateToProps = ({ batches }, { match }) => {
-  const batch = batches.reduce((prev, next) => {
-    if (next._id === match.params.batchId) {
-      return next
+      )
     }
-    return prev
-  }, {})
-
-  return {
-    ...batch
   }
-}
+
+
+const mapStateToProps = state => ({
+batches: state.batches,
+})
+
 
 export default connect(mapStateToProps, { fetchOneBatch })(ClassOverview)
