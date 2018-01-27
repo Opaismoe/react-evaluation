@@ -10,12 +10,14 @@ import AskQuestion from '../components/buttons/AskQuestion'
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
+let pickStudent = 0
 let Result = 0
 const TotResults = []
+let randomNum = Math.floor(Math.random() * 100) + 1
 
-const red = []
-const yellow = []
-const green = []
+let red = []
+let yellow = []
+let green = []
 
 export class ClassOverview extends PureComponent {
   constructor(props) {
@@ -32,7 +34,9 @@ export class ClassOverview extends PureComponent {
 
     this.getColors = this.getColors.bind(this)
     this.sortByColor = this.sortByColor.bind(this)
+    this.whatIsIt = this.whatIsIt.bind(this)
     this.getRandomNum = this.getRandomNum.bind(this)
+    const randomNum = this.getRandomNum(100)
   }
 
   componentWillMount() {
@@ -47,9 +51,9 @@ export class ClassOverview extends PureComponent {
     return console.log('hellooo')
   }
 
-  sortByColor = (value) => {
+  sortByColor = (value, index) => {
     if (value >= 3) {
-      return console.log("green")
+      green.push(value)
     }
     if (value === 2) {
       return yellow.push(value)
@@ -59,20 +63,42 @@ export class ClassOverview extends PureComponent {
     }
   }
 
-  getRandomNum = (max) => {
-    return Math.floor(Math.random() * Math.floor(max));
+  whatIsIt() {
+    console.log(red)
+    console.log(yellow)
+    console.log(green)
   }
+
 
   getColors() {
     const color = []
       { this.props.batches.map(batch => {
         batch.students.map((student, index) => {
           student.colors.filter((colors, index) => {
-            return this.sortByColor(colors)
+            return this.sortByColor(colors, index)
           })
         })
       })
     }
+  }
+
+  getRandomNum = () => {
+    console.log(randomNum)
+  }
+
+  ChoosenStudent = () => {
+    let randomNum = Math.floor(Math.random() * 100) + 1
+    console.log(randomNum)
+    if (randomNum >= 47 ) {
+      console.log("red")
+      return pickStudent = red[Math.floor(Math.random() * red.length)];
+    }
+    else if (randomNum > 21 && randomNum < 47) {
+      console.log("yellow")
+      return pickStudent = yellow[Math.floor(Math.random() * yellow.length)];
+    }
+    else console.log("green")
+    return pickStudent = green[Math.floor(Math.random() * green.length)];
   }
 
   render() {
@@ -97,7 +123,10 @@ export class ClassOverview extends PureComponent {
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
-          <button onClick={this.getColors}/>
+          <button onClick={this.getColors}>sort that shit</button>
+          <button onClick={this.whatIsIt}>whaaaat!!</button>
+          <button onClick={this.getRandomNum}>random num!!</button>
+          <button onClick={this.ChoosenStudent}>random student!!</button>
 
           <h1 style={{textAlign:"center"}}>name:{name}</h1>
           <h3 style={{float:"left"}}>Start date: { startsAt}</h3>
