@@ -98,6 +98,8 @@ export class ClassOverview extends PureComponent {
             disabled={true} />
         </div>
 
+        <h3 >{ this.props.batchColors }</h3>
+        <h3 > HALLO</h3>
         <div className="CardWrap">
           { this.props.students.map(this.renderStudent) }
         </div>
