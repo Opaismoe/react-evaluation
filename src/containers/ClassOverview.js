@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
+import { fetchStudents } from '../actions/students/fetch'
 
 import StudentCard from '../components/UI/StudentCard'
 import AskQuestion from '../components/buttons/AskQuestion'
+import { askQuestion } from '../actions/batches/askQuestion'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
@@ -13,45 +15,53 @@ import './ClassOverview.css'
 let pickStudent = 0
 let Result = 0
 const TotResults = []
-let randomNum = Math.floor(Math.random() * 100) + 1
+
 
 let red = []
 let yellow = []
 let green = []
-
 export class ClassOverview extends PureComponent {
   constructor(props) {
     super(props)
 
-
-
     this.state = {
-      name: props.name,
-      startsAt: props.startsAt,
-      endsAt: props.endsAt,
-      color: props.color,
+      pickedStudent: ["nobodyyy"],
     }
 
+
+    // functions
     this.getColors = this.getColors.bind(this)
     this.sortByColor = this.sortByColor.bind(this)
     this.whatIsIt = this.whatIsIt.bind(this)
-    this.getRandomNum = this.getRandomNum.bind(this)
-    const randomNum = this.getRandomNum(100)
   }
 
   componentWillMount() {
     this.props.fetchOneBatch(this.props.match.params.batchId)
+    this.props.fetchStudents(this.props.match.params.batchId)
     }
 
+  componentDidMount() {
+
+  }
+
   renderStudent(student, index) {
+    const pickedStudent = this.state.pickedStudent
+    if (pickedStudent.length < 3) {
+      student.colors.filter((colors, index) => {
+        return this.sortByColor(colors)
+      })
+    }
     return <StudentCard key={index} student={student} />
   }
 
-  returnColors(student, index) {
-    return console.log('hellooo')
+  setStudent = (state) => {
+    this.setState({
+      pickedStudent: state
+    })
   }
 
-  sortByColor = (value, index) => {
+  sortByColor = (value) => {
+    console.log(value)
     if (value >= 3) {
       green.push(value)
     }
@@ -63,48 +73,48 @@ export class ClassOverview extends PureComponent {
     }
   }
 
+// callback hell! it's everywhere
+
   whatIsIt() {
     console.log(red)
     console.log(yellow)
     console.log(green)
   }
 
+// this looks horrible
 
   getColors() {
-    const color = []
       { this.props.batches.map(batch => {
         batch.students.map((student, index) => {
           student.colors.filter((colors, index) => {
-            return this.sortByColor(colors, index)
+            return this.sortByColor(colors)
           })
         })
       })
     }
   }
 
-  getRandomNum = () => {
-    console.log(randomNum)
-  }
-
   ChoosenStudent = () => {
     let randomNum = Math.floor(Math.random() * 100) + 1
-    console.log(randomNum)
     if (randomNum >= 47 ) {
       console.log("red")
-      return pickStudent = red[Math.floor(Math.random() * red.length)];
+      let pickStudent = Math.floor(Math.random() * ( red.length ));
+      return this.setStudent(`red `+ pickStudent)
     }
     else if (randomNum > 21 && randomNum < 47) {
       console.log("yellow")
-      return pickStudent = yellow[Math.floor(Math.random() * yellow.length)];
+      let pickStudent = Math.floor(Math.random() * ( yellow.length ))
+      return this.setStudent(`yellow `+ pickStudent)
     }
     else console.log("green")
-    return pickStudent = green[Math.floor(Math.random() * green.length)];
+    let pickStudent = Math.floor(Math.random() * ( green.length ))
+    return this.setStudent(`green `+ pickStudent)
   }
 
   render() {
-  const batches = this.props
+  const { batches, students, colors } = this.props
 
-    const { _id, name, startsAt, endsAt, color } = this.state
+    const { _id, name, startsAt, endsAt, color, pickedStudent } = this.props.batches
 
     // clean this up!
     let startDate = new Date(startsAt)
@@ -112,10 +122,11 @@ export class ClassOverview extends PureComponent {
     let endDate = new Date(endsAt)
     let ends = endDate.toLocaleDateString()
 
-    return (
 
+    return (
       <div className="ClassWrap">
 
+      <AskQuestion onClick={this.ChoosenStudent}/>
         <header style={{marginTop:"40px"}}>
 
           <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
@@ -123,18 +134,19 @@ export class ClassOverview extends PureComponent {
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
+
+          <h1 style={{textAlign:"center"}}>name:{this.state.pickedStudent}</h1>
+          ----- vuur pelethon ---->
+
           <button onClick={this.getColors}>sort that shit</button>
           <button onClick={this.whatIsIt}>whaaaat!!</button>
-          <button onClick={this.getRandomNum}>random num!!</button>
-          <button onClick={this.ChoosenStudent}>random student!!</button>
 
-          <h1 style={{textAlign:"center"}}>name:{name}</h1>
           <h3 style={{float:"left"}}>Start date: { startsAt}</h3>
           <h3 style={{float:"right"}}>End date: { endsAt }</h3>
 
           <br/>
           <hr/>
-          <h3> colors { color }</h3>
+          <h3> colors { name }</h3>
           <hr/>
 
         </header>
@@ -162,7 +174,7 @@ export class ClassOverview extends PureComponent {
         <h3 >{ _id }</h3>
         <h3 > HALLO</h3>
           <div className="CardWrap">
-            { this.props.batches.map(batch => {
+            { batches.map(batch => {
                 return batch.students.map((student, index) => {
                   return this.renderStudent(student, index)
              })
@@ -174,11 +186,10 @@ export class ClassOverview extends PureComponent {
     }
   }
 
+  const mapStateToProps = state => ({
+    batches: state.batches,
+    students: state.students,
+  })
 
-const mapStateToProps = state => ({
-  colors: state.batches.students,
-  batches: state.batches,
-})
 
-
-export default connect(mapStateToProps, { fetchOneBatch })(ClassOverview)
+export default connect(mapStateToProps, { fetchStudents, fetchOneBatch, askQuestion })(ClassOverview)

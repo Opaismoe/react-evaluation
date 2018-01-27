@@ -58,7 +58,7 @@ class AskQuestion extends PureComponent {
         <RaisedButton
           label="wtf"
           primary={true}
-          onClick={(prop) => this.renderQuestion(prop)}
+          onClick={this.props.onClick}
           icon={<StarIcon />}
           ref="colors" />
 
