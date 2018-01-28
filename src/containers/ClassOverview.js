@@ -135,7 +135,7 @@ export class ClassOverview extends PureComponent {
             <RaisedButton label="Back" default={true}/>
           </Link>
 
-          <h1 style={{textAlign:"center"}}>name:{this.state.name}</h1>
+          <h1 style={{textAlign:"center"}}>name:{this.state.pickedStudent.name}</h1>
 
 
           ----- vuur pelethon ---->
