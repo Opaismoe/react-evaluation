@@ -9,7 +9,7 @@ import { askQuestion } from '../actions/batches/askQuestion'
 import AskQuestion from '../components/buttons/AskQuestion'
 import { batchShape } from '../components/UI/BatchItem'
 import { studentShape } from '../components/UI/StudentCard'
-
+import StarIcon from 'material-ui/svg-icons/action/visibility'
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
 
@@ -20,21 +20,16 @@ let green = []
 let redStudent = []
 let yellowStudent = []
 let greenStudent = []
+let TotResults = []
 
 export class ClassOverview extends PureComponent {
-  constructor(props) {
+constructor(props) {
     super(props)
-
 
     this.state = {
       pickedStudent: [],
-      student: ""
+      color: "rgb(210, 210, 210)",
     }
-
-
-    // functions
-    this.sortByColor = this.sortByColor.bind(this)
-    this.whatIsIt = this.whatIsIt.bind(this)
   }
 
   componentWillMount() {
@@ -52,29 +47,33 @@ export class ClassOverview extends PureComponent {
     return <StudentCard key={index} student={student} />
   }
 
-  setStudent = (state, student) => {
+  setStudent = (state) => {
     this.props.askQuestion(state)
     this.setState({
       pickedStudent: state,
-      name: student
     })
   }
 
-
-  // zorg dat je de STATE van redux store krijgt!!!!
-  getState = (state) => {
-    this.getState({
-      pickedStudent: state
+  setColorGreen() {
+    this.setState({
+      color: '#00ff4c'
+    })
+  }
+  setColorYellow() {
+    this.setState({
+      color: '#ffe600'
+    })
+  }
+  setColorRed() {
+    this.setState({
+      color: '#ff0000'
     })
   }
 
   sortByColor = (student, value) => {
-    console.log(value)
     if (value >= 3) {
       green.push(value)
       greenStudent.push(student)
-      console.log(greenStudent)
-
     }
     if (value === 2) {
       yellow.push(value)
@@ -86,75 +85,61 @@ export class ClassOverview extends PureComponent {
     }
   }
 
-// callback hell! it's everywhere
-
-  whatIsIt() {
-    console.log(redStudent)
-    console.log(yellowStudent)
-    console.log(greenStudent)
+  setColor() {
+    const color = this.state.pickedStudent.colors
+    if (color[0] === 3) {
+    } else if (color[0] === 2) {
+      this.setColorYellow()
+    } else {
+      this.setColorRed()
+    }
   }
-
 
   ChoosenStudent = (student) => {
     let randomNum = Math.floor(Math.random() * 100) + 1
     if (randomNum >= 47 ) {
-      console.log("red")
-      let pickStudent = Math.floor(Math.random() * ( red.length ));
-      this.setStudent(`red ` + pickStudent)
-      return this.setStudent(redStudent[pickStudent])
+      let numStudent = Math.floor(Math.random() * ( red.length ));
+      this.setStudent(redStudent[numStudent])
+      return this.setColorRed()
     }
     else if (randomNum > 21 && randomNum < 47) {
-      console.log("yellow")
-      let pickStudent = Math.floor(Math.random() * ( yellow.length ))
-      this.setStudent(`yellow ` + pickStudent)
-      return this.setStudent(yellowStudent[pickStudent])
+      let numStudent = Math.floor(Math.random() * ( yellow.length ))
+      this.setStudent(yellowStudent[numStudent])
+      return this.setColorYellow()
     }
-    else console.log("green")
-    let pickStudent = Math.floor(Math.random() * ( green.length ))
-    this.setStudent(`green ` + pickStudent)
-    this.setStudent(greenStudent[pickStudent])
+    else; let numStudent = Math.floor(Math.random() * ( green.length ))
+    this.setStudent(greenStudent[numStudent])
+    return this.setColorGreen()
   }
 
   render() {
   const { batches, students } = this.props
-    const { _id, name, startsAt, endsAt } = this.props.batches
-    // clean this up!
-    let startDate = new Date(startsAt)
-    let starts = startDate.toLocaleDateString()
-    let endDate = new Date(endsAt)
-    let ends = endDate.toLocaleDateString()
-
+    const { _id, startsAt, endsAt } = this.props
+    let color = this.state.color
+    const name = this.state.pickedStudent.name
 
     return (
       <div className="ClassWrap">
 
         <header style={{marginTop:"40px"}}>
-          <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
-          <RaisedButton style={{ float:"right", margin:"0px 5px"}} label="Ask Question" secondary={true}/>
-          <Link to={`/batches`}>
-            <RaisedButton label="Back" default={true}/>
-          </Link>
+          <RaisedButton
+            style={{ width:"150px"}}
+            label={name}
+            backgroundColor={color}
+            fullWidth={true}
+            icon={<StarIcon />}
+          />
 
-          <h1 style={{textAlign:"center"}}>name:{this.state.pickedStudent.name}</h1>
+          <RaisedButton style={{ float:"right"}} label="New student"/>
 
-
-          ----- vuur pelethon ---->
-
-          { batches.map(batch => {
-            return batch.students.map((student, index) => {
-            })
-          })
-        }
-        <AskQuestion onClick={this.ChoosenStudent} student={this.state.pickedColor} name={this.state.student}/>
-
-          <button onClick={this.whatIsIt}>whaaaat!!</button>
-
-          <h3 style={{float:"left"}}>Start date: { startsAt}</h3>
-          <h3 style={{float:"right"}}>End date: { endsAt }</h3>
+          <AskQuestion
+            style={{ float:"right", margin:"0px 5px"}}
+            label="Ask Question"
+            secondary={true}
+            onClick={this.ChoosenStudent}
+          />
 
           <br/>
-          <hr/>
-          <h3> colors { name }</h3>
           <hr/>
 
         </header>
@@ -179,8 +164,7 @@ export class ClassOverview extends PureComponent {
             disabledBackgroundColor={"#ff0000"}
             disabled={true} />
         </div>
-        <h3 >{ _id }</h3>
-        <h3 > HALLO</h3>
+
           <div className="CardWrap">
             { batches.map(batch => {
                 return batch.students.map((student, index) => {
@@ -194,10 +178,11 @@ export class ClassOverview extends PureComponent {
     }
   }
 
-  const mapDispatchToProps = { askQuestion }
+  const mapDispatchToProps = { fetch: fetchStudents }
 
   const mapStateToProps = state => ({
     batches: state.batches,
+    pickedStudent: state.pickedStudent
   })
 
 

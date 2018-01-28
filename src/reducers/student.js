@@ -1,4 +1,4 @@
-import { FETCHED_BATCHES, FETCHED_ONE_BATCH } from '../actions/batches/fetch'
+import { FETCHED_STUDENTS, FETCHED_ONE_STUDENT } from '../actions/students/fetch'
 
 
 export default (state = [], { type, payload } = {}) => {
@@ -17,13 +17,6 @@ export default (state = [], { type, payload } = {}) => {
         }
         return student
       })
-
-    case STUDENT_CREATED :
-      const newBatch = { ...payload }
-      return [newBatch].concat(state)
-
-    case STUDENT_REMOVED :
-        return state.filter((student) => (student._id !== payload._id))
 
     default :
       return state

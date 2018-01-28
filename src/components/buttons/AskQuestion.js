@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton'
 import { fetchBatches } from '../../actions/batches/fetch'
 import { askQuestion } from '../../actions/batches/askQuestion'
-import StarIcon from 'material-ui/svg-icons/action/favorite'
+import StarIcon from 'material-ui/svg-icons/action/visibility'
 
 
 export const studentShape = PropTypes.shape({
@@ -52,19 +52,17 @@ class AskQuestion extends PureComponent {
 
     return (
       <div className="AskQuestion">
-        <p>knopie</p>
         <RaisedButton
-          label="wtf"
-          primary={true}
+          label={this.props.label}
           onClick={this.props.onClick}
-          icon={<StarIcon />}
-          ref="colors" />
-
+          ref="colors"
+          backgroundColor="#9c9090"
+        />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ batches, askQuestion }) => ({ batches, askQuestion })
+const mapStateToProps = ({ batches }) => ({ batches })
 
 export default connect(mapStateToProps, { fetchBatches, askQuestion })(AskQuestion)
