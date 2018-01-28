@@ -1,36 +1,38 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchOneBatch } from '../actions/batches/fetch'
 import { fetchStudents } from '../actions/students/fetch'
 
 import StudentCard from '../components/UI/StudentCard'
-import AskQuestion from '../components/buttons/AskQuestion'
 import { askQuestion } from '../actions/batches/askQuestion'
+import AskQuestion from '../components/buttons/AskQuestion'
+import { batchShape } from '../components/UI/BatchItem'
+import { studentShape } from '../components/UI/StudentCard'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import './ClassOverview.css'
-
-let pickStudent = 0
-let Result = 0
-const TotResults = []
 
 
 let red = []
 let yellow = []
 let green = []
+let redStudent = []
+let yellowStudent = []
+let greenStudent = []
+
 export class ClassOverview extends PureComponent {
   constructor(props) {
     super(props)
 
+
     this.state = {
-      pickedStudent: ["nobodyyy"],
+      pickedStudent: [],
+      student: ""
     }
 
 
     // functions
-    this.getColors = this.getColors.bind(this)
     this.sortByColor = this.sortByColor.bind(this)
     this.whatIsIt = this.whatIsIt.bind(this)
   }
@@ -40,82 +42,82 @@ export class ClassOverview extends PureComponent {
     this.props.fetchStudents(this.props.match.params.batchId)
     }
 
-  componentDidMount() {
-
-  }
-
   renderStudent(student, index) {
     const pickedStudent = this.state.pickedStudent
-    if (pickedStudent.length < 3) {
+    if (pickedStudent.length < 2) {
       student.colors.filter((colors, index) => {
-        return this.sortByColor(colors)
+      return this.sortByColor(student, colors)
       })
     }
     return <StudentCard key={index} student={student} />
   }
 
-  setStudent = (state) => {
+  setStudent = (state, student) => {
+    this.props.askQuestion(state)
     this.setState({
+      pickedStudent: state,
+      name: student
+    })
+  }
+
+
+  // zorg dat je de STATE van redux store krijgt!!!!
+  getState = (state) => {
+    this.getState({
       pickedStudent: state
     })
   }
 
-  sortByColor = (value) => {
+  sortByColor = (student, value) => {
     console.log(value)
     if (value >= 3) {
       green.push(value)
+      greenStudent.push(student)
+      console.log(greenStudent)
+
     }
     if (value === 2) {
-      return yellow.push(value)
+      yellow.push(value)
+      yellowStudent.push(student)
     }
     if (value < 2) {
-      return red.push(value)
+      red.push(value)
+      redStudent.push(student)
     }
   }
 
 // callback hell! it's everywhere
 
   whatIsIt() {
-    console.log(red)
-    console.log(yellow)
-    console.log(green)
+    console.log(redStudent)
+    console.log(yellowStudent)
+    console.log(greenStudent)
   }
 
-// this looks horrible
 
-  getColors() {
-      { this.props.batches.map(batch => {
-        batch.students.map((student, index) => {
-          student.colors.filter((colors, index) => {
-            return this.sortByColor(colors)
-          })
-        })
-      })
-    }
-  }
-
-  ChoosenStudent = () => {
+  ChoosenStudent = (student) => {
     let randomNum = Math.floor(Math.random() * 100) + 1
     if (randomNum >= 47 ) {
       console.log("red")
       let pickStudent = Math.floor(Math.random() * ( red.length ));
-      return this.setStudent(`red `+ pickStudent)
+      this.setStudent(`red ` + pickStudent)
+      return this.setStudent(redStudent[pickStudent])
     }
     else if (randomNum > 21 && randomNum < 47) {
       console.log("yellow")
       let pickStudent = Math.floor(Math.random() * ( yellow.length ))
-      return this.setStudent(`yellow `+ pickStudent)
+      this.setStudent(`yellow ` + pickStudent)
+      return this.setStudent(yellowStudent[pickStudent])
     }
     else console.log("green")
     let pickStudent = Math.floor(Math.random() * ( green.length ))
-    return this.setStudent(`green `+ pickStudent)
+    this.setStudent(`green ` + pickStudent)
+    this.setStudent(greenStudent[pickStudent])
   }
 
   render() {
-  const { batches, students, colors } = this.props
-
-    const { _id, name, startsAt, endsAt, color, pickedStudent } = this.props.batches
-
+  const { batches, students } = this.props
+    const { _id, name, startsAt, endsAt } = this.props.batches
     // clean this up!
     let startDate = new Date(startsAt)
     let starts = startDate.toLocaleDateString()
@@ -126,19 +128,25 @@ export class ClassOverview extends PureComponent {
     return (
       <div className="ClassWrap">
 
-      <AskQuestion onClick={this.ChoosenStudent}/>
         <header style={{marginTop:"40px"}}>
-
           <RaisedButton style={{ float:"right"}} label="New student" secondary={true}/>
           <RaisedButton style={{ float:"right", margin:"0px 5px"}} label="Ask Question" secondary={true}/>
           <Link to={`/batches`}>
             <RaisedButton label="Back" default={true}/>
           </Link>
 
-          <h1 style={{textAlign:"center"}}>name:{this.state.pickedStudent}</h1>
+          <h1 style={{textAlign:"center"}}>name:{this.state.name}</h1>
+
+
           ----- vuur pelethon ---->
 
-          <button onClick={this.getColors}>sort that shit</button>
+          { batches.map(batch => {
+            return batch.students.map((student, index) => {
+            })
+          })
+        }
+        <AskQuestion onClick={this.ChoosenStudent} student={this.state.pickedColor} name={this.state.student}/>
+
           <button onClick={this.whatIsIt}>whaaaat!!</button>
 
           <h3 style={{float:"left"}}>Start date: { startsAt}</h3>
@@ -177,18 +185,19 @@ export class ClassOverview extends PureComponent {
             { batches.map(batch => {
                 return batch.students.map((student, index) => {
                   return this.renderStudent(student, index)
-             })
-           })
-         }
+                 })
+               })
+             }
           </div>
         </div>
       )
     }
   }
 
+  const mapDispatchToProps = { askQuestion }
+
   const mapStateToProps = state => ({
     batches: state.batches,
-    students: state.students,
   })
 
 

@@ -5,7 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { fetchBatches } from '../../actions/batches/fetch'
 import { askQuestion } from '../../actions/batches/askQuestion'
 import StarIcon from 'material-ui/svg-icons/action/favorite'
-import BatchItem, { batchShape } from '../../components/UI/BatchItem'
 
 
 export const studentShape = PropTypes.shape({
@@ -51,10 +50,9 @@ class AskQuestion extends PureComponent {
 
   render() {
 
-
     return (
       <div className="AskQuestion">
-        <p>here i am</p>
+        <p>knopie</p>
         <RaisedButton
           label="wtf"
           primary={true}

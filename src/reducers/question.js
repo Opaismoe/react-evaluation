@@ -1,12 +1,11 @@
-import { ASK_QUESTION } from '../actions/batches/askQuestion'
+import ASK_QUESTION from '../actions/batches/askQuestion'
 
-export default (state = {colors}, { type, payload } = {}) => {
+export default (state = [], { type, payload } = {}) => {
   switch (type) {
 
     case ASK_QUESTION :
-      const batchColors = { ...payload}
+    console.log('hellooo from the reducer')
       return state
-    default :
-      return state
+      })
+    }
   }
-}
